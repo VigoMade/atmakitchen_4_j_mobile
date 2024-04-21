@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:atmakitchen_4_j_mobile/detailItem.dart';
 
 class itemPage extends StatelessWidget {
   const itemPage({super.key, required this.title});
@@ -154,7 +155,7 @@ class itemPage extends StatelessWidget {
             children: [
               Container(
                 height: 150,
-                width: 150,
+                width: 170,
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),

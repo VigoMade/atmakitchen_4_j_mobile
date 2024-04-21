@@ -61,12 +61,12 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ),
           SizedBox(
-            height: 170,
+            height: 190,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: items.length,
               separatorBuilder: (context, _) => const SizedBox(
-                width: 12,
+                width: 5,
               ),
               itemBuilder: (context, index) => buildCard(item: items[index]),
             ),
@@ -107,23 +107,28 @@ class _ExplorePageState extends State<ExplorePage> {
           );
         },
         child: SizedBox(
-          width: 100,
+          width: 85,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  padding: const EdgeInsets.all(15),
+                  width: 75,
+                  // padding: const EdgeInsets.all(15),
                   margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(198, 160, 180, 0.486),
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   child: Image.asset(item.image)),
-              Text(
-                item.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              Container(
+                alignment: Alignment.center,
+                width: 100,
+                child: Text(
+                  item.title,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             ],
@@ -136,13 +141,12 @@ class _ExplorePageState extends State<ExplorePage> {
           _showItemDetails(item);
         },
         child: SizedBox(
-          width: 100,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 height: 150,
-                width: 150,
+                width: 180,
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
