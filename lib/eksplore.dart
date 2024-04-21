@@ -53,8 +53,8 @@ class _ExplorePageState extends State<ExplorePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Container(
+            margin: EdgeInsets.only(top: 20, left: 10),
             child: Text(
               "Category",
               style: TextStyle(fontSize: 30),
@@ -113,13 +113,16 @@ class _ExplorePageState extends State<ExplorePage> {
             children: [
               Container(
                   width: 75,
-                  // padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(198, 160, 180, 0.486),
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: Image.asset(item.image)),
+                  child: Image.asset(
+                    item.image,
+                    fit: BoxFit.cover,
+                  )),
               Container(
                 alignment: Alignment.center,
                 width: 100,
