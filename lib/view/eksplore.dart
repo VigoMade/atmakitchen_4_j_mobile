@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:atmakitchen_4_j_mobile/item.dart';
+import 'package:atmakitchen_4_j_mobile/view/item.dart';
 
 class CardItem {
   final String image;
@@ -54,8 +54,8 @@ class _ExplorePageState extends State<ExplorePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20, left: 10),
-            child: Text(
+            margin: const EdgeInsets.only(top: 20, left: 10),
+            child: const Text(
               "Category",
               style: TextStyle(fontSize: 30),
             ),
@@ -76,15 +76,15 @@ class _ExplorePageState extends State<ExplorePage> {
             padding: const EdgeInsets.all(10),
             child: const Text(
               "Special Menu",
-              style: TextStyle(fontSize: 30), // Mengatur teks ke tengah
+              style: TextStyle(fontSize: 30),
             ),
           ),
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Jumlah kolom dalam grid
-                crossAxisSpacing: 9.0, // Jarak antara kolom
-                mainAxisSpacing: 8.0, // Jarak antara baris
+                crossAxisCount: 2,
+                crossAxisSpacing: 9.0,
+                mainAxisSpacing: 8.0,
               ),
               itemCount: menu.length,
               itemBuilder: (context, index) => buildCardMenu(item: menu[index]),
@@ -100,7 +100,7 @@ class _ExplorePageState extends State<ExplorePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => itemPage(
+              builder: (context) => ItemPage(
                 title: item.title,
               ),
             ),
@@ -159,8 +159,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   borderRadius: BorderRadius.circular(40),
                   child: Image.asset(
                     item.image,
-                    fit: BoxFit
-                        .cover, // Sesuaikan gambar dengan ukuran kontainer
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -191,8 +190,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   borderRadius: BorderRadius.circular(40),
                   child: Image.asset(
                     item.image,
-                    fit: BoxFit
-                        .cover, // Sesuaikan gambar dengan ukuran kontainer
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

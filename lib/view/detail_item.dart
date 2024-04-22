@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class detailPage extends StatefulWidget {
-  const detailPage({super.key});
+class DetailPage extends StatefulWidget {
+  const DetailPage({super.key});
 
   @override
-  State<detailPage> createState() => _detailPageState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _detailPageState extends State<detailPage> {
+class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +18,10 @@ class _detailPageState extends State<detailPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context)
-                .pop(); // Menutup halaman saat tombol kembali ditekan
+            Navigator.of(context).pop();
           },
         ),
-        title: Text(
+        title: const Text(
           "Atma Kitchen",
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
