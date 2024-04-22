@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:atmakitchen_4_j_mobile/eksplore.dart';
-import 'package:atmakitchen_4_j_mobile/booking.dart';
+import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
+import 'package:atmakitchen_4_j_mobile/view/booking.dart';
 import 'package:atmakitchen_4_j_mobile/profile.dart';
 
-class indexPage extends StatefulWidget {
-  const indexPage({super.key});
+class IndexPage extends StatefulWidget {
+  const IndexPage({super.key});
 
   @override
-  State<indexPage> createState() => _indexPageState();
+  State<IndexPage> createState() => _IndexPageState();
 }
 
-class _indexPageState extends State<indexPage> {
-  int _selectedIndex = 0; // Indeks halaman saat ini
+class _IndexPageState extends State<IndexPage> {
+  int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     ExplorePage(),
-    bookingPage(),
-    profile(), // Use ProfilePage widget here
+    BookingPage(),
+    profile(),
   ];
 
   void _onItemTapped(int index) {
@@ -37,7 +37,7 @@ class _indexPageState extends State<indexPage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 40,
               color: Colors.white,
@@ -74,7 +74,7 @@ class _indexPageState extends State<indexPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromRGBO(245, 136, 194, 0.482),
+        selectedItemColor: const Color.fromRGBO(245, 136, 194, 0.482),
         onTap: _onItemTapped,
       ),
     );

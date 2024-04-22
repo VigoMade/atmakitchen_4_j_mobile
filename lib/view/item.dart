@@ -1,17 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:atmakitchen_4_j_mobile/detailItem.dart';
 
-class itemPage extends StatelessWidget {
-  const itemPage({super.key, required this.title});
+class ItemPage extends StatelessWidget {
+  const ItemPage({super.key, required this.title});
   final String title;
 
   @override
   Widget build(BuildContext context) {
     List<CardItem> relatedItems = [];
-
-    // Menentukan item terkait berdasarkan item yang dipilih
     if (title == "Cake") {
       relatedItems = [
         const CardItem(
@@ -81,11 +76,10 @@ class itemPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context)
-                .pop(); // Menutup halaman saat tombol kembali ditekan
+            Navigator.of(context).pop();
           },
         ),
-        title: Text(
+        title: const Text(
           "Atma Kitchen",
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
@@ -96,13 +90,13 @@ class itemPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-                color: Color(0xFFAD343E),
+                color: const Color(0xFFAD343E),
                 borderRadius: BorderRadius.circular(10)),
             child: TextField(
               decoration: InputDecoration(
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.search,
                     size: 40,
                     color: Colors.white,
@@ -110,13 +104,11 @@ class itemPage extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
                   hintText: 'Search',
-                  hintStyle:
-                      TextStyle(color: Color.fromRGBO(222, 217, 217, 0.699)),
-                  fillColor: Color(0xFFAD343E)),
-              onChanged: (value) {
-                // Handle pencarian di sini
-              },
-              style: TextStyle(
+                  hintStyle: const TextStyle(
+                      color: Color.fromRGBO(222, 217, 217, 0.699)),
+                  fillColor: const Color(0xFFAD343E)),
+              onChanged: (value) {},
+              style: const TextStyle(
                   color: Color.fromARGB(255, 234, 227, 227), fontSize: 20),
             ),
           ),
@@ -125,18 +117,16 @@ class itemPage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               title,
-              style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold), // Mengatur teks ke tengah
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Jumlah kolom dalam grid
-                crossAxisSpacing: 9.0, // Jarak antara kolom
+                crossAxisCount: 2,
+                crossAxisSpacing: 9.0,
                 mainAxisSpacing: 8.0,
-                childAspectRatio: 0.75, // Jarak antara baris
+                childAspectRatio: 0.75,
               ),
               itemCount: relatedItems.length,
               itemBuilder: (context, index) =>
