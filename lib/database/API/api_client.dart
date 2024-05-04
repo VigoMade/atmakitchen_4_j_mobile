@@ -5,3 +5,7 @@ class ApiClient {
     baseUrl = '$domainName/api';
   }
 }
+
+String getThumbnail(String image) {
+  return '${ApiClient().baseUrl}/produk/$image';
+}

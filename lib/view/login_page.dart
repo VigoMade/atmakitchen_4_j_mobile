@@ -84,136 +84,139 @@ class _LoginviewState extends State<LoginPage> {
               body: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome Back,',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.normal,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Welcome Back,',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              Text(
+                                'Login!',
+                                style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        TextFormField(
+                          key: const Key("input-username"),
+                          controller: usernameController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.person),
+                            labelText: 'username',
+                          ),
+                          validator: (value) {
+                            if (value == '') {
+                              return 'Please enter your username';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 2),
+                        TextFormField(
+                          key: const Key("input-password"),
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.lock),
+                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                context.read<LoginBloc>().add(
+                                      IsPasswordVisibleChanged(),
+                                    );
+                              },
+                              icon: Icon(
+                                state.isPasswordVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: state.isPasswordVisible
+                                    ? Colors.grey
+                                    : Colors.blue,
                               ),
                             ),
-                            Text(
-                              'Login!',
-                              style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          obscureText: state.isPasswordVisible,
+                          validator: (value) =>
+                              value == '' ? 'Please enter your Password' : null,
+                        ),
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<LoginBloc>().add(
+                                      FormSubmitted(
+                                          username: usernameController.text,
+                                          password: passwordController.text),
+                                    );
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color(0xFFAD343E)),
+                            ),
+                            child: Padding(
+                              key: const ValueKey('login'),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 16.0),
+                              child: state.formSubmissionState is FormSubmitting
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white)
+                                  : const Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Forget ur Password?"),
+                            TextButton(
+                              onPressed: () {
+                                pushForget(context);
+                              },
+                              child: const Text("Forget"),
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      TextFormField(
-                        key: const Key("input-username"),
-                        controller: usernameController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          labelText: 'username',
-                        ),
-                        validator: (value) {
-                          if (value == '') {
-                            return 'Please enter your username';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 2),
-                      TextFormField(
-                        key: const Key("input-password"),
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
-                          labelText: 'Password',
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              context.read<LoginBloc>().add(
-                                    IsPasswordVisibleChanged(),
-                                  );
-                            },
-                            icon: Icon(
-                              state.isPasswordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: state.isPasswordVisible
-                                  ? Colors.grey
-                                  : Colors.blue,
-                            ),
+                        const SizedBox(height: 20),
+                        CarouselSlider(
+                          items: imagePaths
+                              .map((path) => Image.asset(path))
+                              .toList(),
+                          options: CarouselOptions(
+                            height: 200,
+                            autoPlay: true,
+                            aspectRatio: 16 / 9,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
+                            enableInfiniteScroll: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            viewportFraction: 0.8,
                           ),
                         ),
-                        obscureText: state.isPasswordVisible,
-                        validator: (value) =>
-                            value == '' ? 'Please enter your Password' : null,
-                      ),
-                      const SizedBox(height: 30),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              context.read<LoginBloc>().add(
-                                    FormSubmitted(
-                                        username: usernameController.text,
-                                        password: passwordController.text),
-                                  );
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color(0xFFAD343E)),
-                          ),
-                          child: Padding(
-                            key: const ValueKey('login'),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 16.0),
-                            child: state.formSubmissionState is FormSubmitting
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white)
-                                : const Text(
-                                    "Login",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Forget ur Password?"),
-                          TextButton(
-                            onPressed: () {
-                              pushForget(context);
-                            },
-                            child: const Text("Forget"),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      CarouselSlider(
-                        items: imagePaths
-                            .map((path) => Image.asset(path))
-                            .toList(),
-                        options: CarouselOptions(
-                          height: 200,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          enableInfiniteScroll: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          viewportFraction: 0.8,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
