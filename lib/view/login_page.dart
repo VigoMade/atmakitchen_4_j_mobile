@@ -223,6 +223,8 @@ class _LoginviewState extends State<LoginPage> {
     await sharedPrefs.setInt('id_customer', userData.idCustomer!);
     await sharedPrefs.setString('username', userData.username!);
     await sharedPrefs.setString('email', userData.email!);
+    await sharedPrefs.setString('noTelp', userData.noTelpon!);
+    await sharedPrefs.setString('name', userData.nama!);
     await sharedPrefs.setString('token', userData.token!);
   }
 }

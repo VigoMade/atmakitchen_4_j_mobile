@@ -1,4 +1,3 @@
-import 'package:atmakitchen_4_j_mobile/view/MO/presensi.dart';
 import 'package:atmakitchen_4_j_mobile/view/MO/presensiView.dart';
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
@@ -19,7 +18,7 @@ class _IndexPageState extends State<IndexPage> {
     ExplorePage(),
     BookingPage(),
     presensiView(),
-    profile(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,26 +30,6 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Image.asset("images/logo.png"),
-        title: const Text(
-          "Atma Kitchen",
-          style: TextStyle(fontSize: 30, color: Colors.white),
-        ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              size: 40,
-              color: Colors.white,
-            ),
-          )
-        ],
-        backgroundColor: const Color(0xFFAD343E),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
