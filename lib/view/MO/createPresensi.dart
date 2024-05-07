@@ -1,4 +1,5 @@
 import 'package:atmakitchen_4_j_mobile/model/pegawai.dart';
+import 'package:atmakitchen_4_j_mobile/view/index.dart';
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/model/presensi.dart';
 import 'package:atmakitchen_4_j_mobile/database/API/presensi_data.dart';
@@ -80,7 +81,8 @@ class _CreatePresensiPageState extends State<CreatePresensiPage> {
       try {
         await presensiClient.createPresensi(newPresensi);
         showSnackBar('Presensi berhasil dibuat!');
-        Navigator.of(context).pop();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => IndexPage(number: 2)));
       } catch (e) {
         showSnackBar(
             'Gagal membuat presensi $_selectedEmployeeName $_selectedDate $_selectedStatus: $e');

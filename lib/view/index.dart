@@ -1,25 +1,33 @@
-import 'package:atmakitchen_4_j_mobile/view/MO/presensiView.dart';
 import 'package:flutter/material.dart';
+import 'package:atmakitchen_4_j_mobile/view/MO/presensiView.dart';
 import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
 import 'package:atmakitchen_4_j_mobile/view/booking.dart';
 import 'package:atmakitchen_4_j_mobile/profile.dart';
 
 class IndexPage extends StatefulWidget {
-  const IndexPage({super.key});
+  const IndexPage({Key? key, required this.number}) : super(key: key);
+  final int number;
 
   @override
   State<IndexPage> createState() => _IndexPageState();
 }
 
 class _IndexPageState extends State<IndexPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; // Inisialisasi indeks default
 
   static const List<Widget> _widgetOptions = <Widget>[
     ExplorePage(),
     BookingPage(),
-    presensiView(),
+    presensiView(), // Mengubah presensiView() menjadi PresensiView()
     ProfilePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex =
+        widget.number; // Atur nilai indeks dengan nilai dari properti widget
+  }
 
   void _onItemTapped(int index) {
     setState(() {

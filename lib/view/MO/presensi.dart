@@ -1,4 +1,5 @@
 import 'package:atmakitchen_4_j_mobile/view/MO/presensiView.dart';
+import 'package:atmakitchen_4_j_mobile/view/index.dart';
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/model/presensi.dart'; // Import model Presensi
 import 'package:atmakitchen_4_j_mobile/database/API/presensi_data.dart';
@@ -76,7 +77,8 @@ class _PresensiPageState extends State<PresensiPage> {
           content: Text('Changes saved successfully'),
         ),
       );
-      Navigator.of(context).pop();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => IndexPage(number: 2)));
     } catch (e) {
       // Menampilkan pesan kesalahan jika gagal menyimpan perubahan
       ScaffoldMessenger.of(context).showSnackBar(

@@ -38,8 +38,8 @@ class _LoginviewState extends State<LoginPage> {
             User userData =
                 (state.formSubmissionState as SubmissionSuccess).user;
             await saveLoginData(userData);
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => const IndexPage()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => const IndexPage(number: 0)));
           }
           if (state.formSubmissionState is SubmissionFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
