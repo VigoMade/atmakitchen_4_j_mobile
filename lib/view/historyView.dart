@@ -57,7 +57,7 @@ class _HistoryPageState extends State<HistoryPage> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
-              onChanged: _fetchHistorySearch,
+              onChanged: _filterHistory,
               decoration: InputDecoration(
                 labelText: 'Search',
                 border: OutlineInputBorder(),
