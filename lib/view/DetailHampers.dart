@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:atmakitchen_4_j_mobile/database/API/api_client.dart';
-import 'package:atmakitchen_4_j_mobile/model/produk.dart';
+import 'package:atmakitchen_4_j_mobile/model/hampers.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key, required this.produk}) : super(key: key);
-  final Produk produk;
+class DetailHampers extends StatefulWidget {
+  const DetailHampers({Key? key, required this.hampers}) : super(key: key);
+  final Hampers hampers;
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailHampers> createState() => _DetailHampersState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailHampersState extends State<DetailHampers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +48,7 @@ class _DetailPageState extends State<DetailPage> {
                       top: Radius.circular(14.0),
                     ),
                     child: Image.network(
-                      '${ApiClient().domainName}/images/${widget.produk.image}',
+                      '${ApiClient().domainName}/images/${widget.hampers.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -76,7 +75,7 @@ class _DetailPageState extends State<DetailPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                widget.produk.namaProduk,
+                                widget.hampers.namaHampers!,
                                 style: const TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
@@ -85,7 +84,7 @@ class _DetailPageState extends State<DetailPage> {
                               padding:
                                   const EdgeInsets.only(left: 8.0, right: 8.0),
                               child: Text(
-                                'Rp ${widget.produk.hargaProduk.toString()}.00',
+                                'Rp ${widget.hampers.hargaHampers.toString()}.00',
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),
@@ -94,16 +93,9 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10.0, left: 8.0),
-                          child: Text(
-                            "Stock : ${widget.produk.stockProduk.toString()}",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Padding(
                           padding: const EdgeInsets.only(left: 8.0, top: 15.0),
                           child: Text(
-                            "Kue lapis legit merupakan makanan khas Lampung yang terkenal. Kue yang bertekstur lembut dan bercita rasa manis ini biasa dijadikan cemilan santai ketika dirumah. Kue lapis legit juga sering disajikan pada acara hajatan.",
+                            widget.hampers.deskripsiHampers!,
                             style: const TextStyle(
                               fontSize: 12,
                             ),

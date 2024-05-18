@@ -1,22 +1,20 @@
-import 'package:atmakitchen_4_j_mobile/view/detail_item.dart';
+import 'package:atmakitchen_4_j_mobile/database/API/hampers_data.dart';
+import 'package:atmakitchen_4_j_mobile/view/DetailHampers.dart';
 import 'package:flutter/material.dart';
-import 'package:atmakitchen_4_j_mobile/model/produk.dart';
+import 'package:atmakitchen_4_j_mobile/model/hampers.dart';
 import 'package:atmakitchen_4_j_mobile/database/API/api_client.dart';
-import 'package:atmakitchen_4_j_mobile/database/API/produk_data.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-class ItemPage extends StatefulWidget {
-  const ItemPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+class HampersPage extends StatefulWidget {
+  const HampersPage({Key? key}) : super(key: key);
 
   @override
-  _ItemPageState createState() => _ItemPageState();
+  _HampersPageState createState() => _HampersPageState();
 }
 
-class _ItemPageState extends State<ItemPage> {
-  late Future<List<Produk>> _produkFuture;
+class _HampersPageState extends State<HampersPage> {
+  late Future<List<Hampers>> _HampersFuture;
 
   @override
   void initState() {
@@ -26,21 +24,21 @@ class _ItemPageState extends State<ItemPage> {
 
   void _fetchProdukData() {
     final apiClient = ApiClient();
-    _produkFuture = ProdukClient(apiClient).getProdukList(widget.title);
+    _HampersFuture = HampersClient(apiClient).getHampersList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Produk>>(
-      future: _produkFuture,
+    return FutureBuilder<List<Hampers>>(
+      future: _HampersFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          List<Produk>? produkList = snapshot.data;
-          if (produkList != null) {
+          List<Hampers>? hampersList = snapshot.data;
+          if (hampersList != null) {
             return Scaffold(
               appBar: AppBar(
                 leading: IconButton(
@@ -85,10 +83,10 @@ class _ItemPageState extends State<ItemPage> {
                           mainAxisSpacing: 16.0,
                           childAspectRatio: 0.8,
                         ),
-                        itemCount: produkList.length,
+                        itemCount: hampersList.length,
                         itemBuilder: (context, index) {
-                          final produk = produkList[index];
-                          return buildCardMenu(produk: produk);
+                          final hampers = hampersList[index];
+                          return buildCardMenu(hampers: hampers);
                         },
                       ),
                     ),
@@ -104,7 +102,7 @@ class _ItemPageState extends State<ItemPage> {
     );
   }
 
-  Widget buildCardMenu({required Produk produk}) => GestureDetector(
+  Widget buildCardMenu({required Hampers hampers}) => GestureDetector(
         onTap: () {
           Navigator.push(
             context,
@@ -124,8 +122,8 @@ class _ItemPageState extends State<ItemPage> {
                 );
               },
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailPage(
-                produk: produk,
+                  DetailHampers(
+                hampers: hampers,
               ),
             ),
           );
@@ -142,7 +140,7 @@ class _ItemPageState extends State<ItemPage> {
                     top: Radius.circular(14.0),
                   ),
                   child: Image.network(
-                    '${ApiClient().domainName}/images/${produk.image}',
+                    '${ApiClient().domainName}/images/${hampers.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
@@ -166,7 +164,7 @@ class _ItemPageState extends State<ItemPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          produk.namaProduk,
+                          hampers.namaHampers!,
                           style: const TextStyle(
                             fontSize: 15,
                           ),
@@ -176,7 +174,7 @@ class _ItemPageState extends State<ItemPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          'Rp ${produk.hargaProduk.toString()}.00',
+                          'Rp ${hampers.hargaHampers.toString()}.00',
                           style: const TextStyle(
                             fontSize: 12,
                           ),
