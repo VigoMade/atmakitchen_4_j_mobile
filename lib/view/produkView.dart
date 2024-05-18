@@ -124,9 +124,7 @@ class _ItemPageState extends State<ItemPage> {
                 );
               },
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  DetailPage(
-                produk: produk,
-              ),
+                  DetailPage(produk: produk),
             ),
           );
         },
@@ -141,20 +139,19 @@ class _ItemPageState extends State<ItemPage> {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(14.0),
                   ),
-
                   child: CachedNetworkImage(
                     imageUrl:
                         '${ApiClient().domainName}/storage/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
-                    errorBuilder: (context, error, stackTrace) => Container(
+                    errorWidget: (context, url, error) => Container(
                       color: Colors.grey,
                       child: Center(
                         child: Icon(Icons.error),
                       ),
                     ),
-                  ), // Use the image URL from the Produk object
+                  ),
                 ),
               ),
               Flexible(
