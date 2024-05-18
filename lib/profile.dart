@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         radius: 50,
                         backgroundImage: NetworkImage(image == ""
                             ? 'https://via.placeholder.com/150'
-                            : "http://10.0.2.2:8000/images/${image}"),
+                            : "http://10.0.2.2:8000/storage/${image}"),
                       ),
                     ),
                     SizedBox(height: 10),
