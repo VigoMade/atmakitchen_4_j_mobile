@@ -43,13 +43,11 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     List<CardItem> items = [
       const CardItem(image: "images/cake.png", title: "Cake", subTitle: ""),
-      const CardItem(image: "images/bread.png", title: "Roti", subTitle: ""),
-      const CardItem(
-          image: "images/minuman.png", title: "Minuman", subTitle: ""),
+      const CardItem(image: "images/bread.png", title: "bread", subTitle: ""),
+      const CardItem(image: "images/minuman.png", title: "drink", subTitle: ""),
       const CardItem(
           image: "images/hampers.png", title: "Hampers", subTitle: ""),
-      const CardItem(
-          image: "images/lainnya.png", title: "Lainnya", subTitle: ""),
+      const CardItem(image: "images/lainnya.png", title: "other", subTitle: ""),
     ];
 
     return Scaffold(
@@ -239,7 +237,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     top: Radius.circular(14.0),
                   ),
                   child: Image.network(
-                    '${ApiClient().domainName}/images/${produk.image}',
+                    '${ApiClient().domainName}/storage/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     errorBuilder: (context, error, stackTrace) => Container(

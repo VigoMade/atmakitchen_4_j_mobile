@@ -143,7 +143,7 @@ class _ItemPageState extends State<ItemPage> {
                   ),
                   child: CachedNetworkImage(
                     imageUrl:
-                        '${ApiClient().domainName}/images/${produk.image}',
+                        '${ApiClient().domainName}/storage/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     placeholder: (context, url) => CircularProgressIndicator(),
