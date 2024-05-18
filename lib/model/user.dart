@@ -7,16 +7,19 @@ class User {
   String? noTelpon;
   String? emailVerifiedAt;
   String? token;
-  User({
-    this.idCustomer,
-    this.nama,
-    this.username,
-    this.password,
-    this.email,
-    this.noTelpon,
-    this.emailVerifiedAt,
-    this.token,
-  });
+  String? role;
+  String? image;
+  User(
+      {this.idCustomer,
+      this.nama,
+      this.username,
+      this.password,
+      this.email,
+      this.noTelpon,
+      this.emailVerifiedAt,
+      this.token,
+      this.role,
+      this.image});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -26,6 +29,8 @@ class User {
       noTelpon: json['noTelpon'],
       username: json['username'],
       emailVerifiedAt: json['email_verified_at'],
+      role: json['role'],
+      image: json['image'],
     );
   }
 
@@ -39,6 +44,8 @@ class User {
       'noTelpon': noTelpon,
       'email_verified_at': emailVerifiedAt,
       'token': token,
+      'role': role,
+      'image': image,
     };
   }
 }
