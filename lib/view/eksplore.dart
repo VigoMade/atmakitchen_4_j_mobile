@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:atmakitchen_4_j_mobile/view/item.dart';
+import 'package:atmakitchen_4_j_mobile/view/produkView.dart';
+import 'package:atmakitchen_4_j_mobile/model/produk.dart';
+import 'package:atmakitchen_4_j_mobile/database/API/api_client.dart';
+import 'package:atmakitchen_4_j_mobile/database/API/produk_data.dart';
+import 'package:atmakitchen_4_j_mobile/view/detail_item.dart';
+import 'package:flutter/widgets.dart';
 
 class CardItem {
   final String image;
@@ -21,6 +26,19 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+  late Future<List<Produk>> _produkFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _produkFuture = _fetchProdukData();
+  }
+
+  Future<List<Produk>> _fetchProdukData() async {
+    final apiClient = ApiClient();
+    return ProdukClient(apiClient).getProdukSpecial();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<CardItem> items = [
@@ -32,21 +50,6 @@ class _ExplorePageState extends State<ExplorePage> {
           image: "images/hampers.png", title: "Hampers", subTitle: ""),
       const CardItem(
           image: "images/lainnya.png", title: "Lainnya", subTitle: ""),
-    ];
-
-    List<CardItem> menu = [
-      const CardItem(
-          image: "images/milk_bun.jpg",
-          title: "Milk Bun",
-          subTitle: "Rp 130.000,00"),
-      const CardItem(
-          image: "images/keripik_kentang.jpg",
-          title: "Keripik Kentang",
-          subTitle: "Rp 100.000,00"),
-      const CardItem(
-          image: "images/lapis_surabaya.jpg",
-          title: "Lapis Surabaya",
-          subTitle: "Rp 120.000,00"),
     ];
 
     return Scaffold(
@@ -66,7 +69,7 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           )
         ],
-        backgroundColor: const Color(0xFFAD343E),
+        backgroundColor: Color.fromARGB(255, 201, 52, 64),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -81,7 +84,7 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ),
           SizedBox(
-            height: 190,
+            height: 110,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: items.length,
@@ -100,14 +103,35 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 9.0,
-                mainAxisSpacing: 8.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: FutureBuilder<List<Produk>>(
+                future: _produkFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No special products available'));
+                  } else {
+                    final produkList = snapshot.data!;
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0, // Increased spacing
+                        mainAxisSpacing: 16.0, // Increased spacing
+                      ),
+                      itemCount: produkList.length,
+                      itemBuilder: (context, index) {
+                        final produk = produkList[index];
+                        return buildCardMenu(produk: produk);
+                      },
+                    );
+                  }
+                },
               ),
-              itemCount: menu.length,
-              itemBuilder: (context, index) => buildCardMenu(item: menu[index]),
             ),
           ),
         ],
@@ -119,77 +143,145 @@ class _ExplorePageState extends State<ExplorePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => ItemPage(
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 500),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOut;
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+              pageBuilder: (context, animation, secondaryAnimation) => ItemPage(
                 title: item.title,
               ),
             ),
           );
         },
-        child: SizedBox(
-          width: 85,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  width: 75,
-                  padding: const EdgeInsets.all(15),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(198, 160, 180, 0.486),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
+        child: Card(
+          margin: EdgeInsets.only(top: 20, right: 5, left: 5),
+          elevation: 5.0,
+          child: Container(
+            width: 80,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(121, 238, 195, 121),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  height: 50,
+                  width: 50,
                   child: Image.asset(
                     item.image,
                     fit: BoxFit.cover,
-                  )),
-              Container(
-                alignment: Alignment.center,
-                width: 100,
-                child: Text(
-                  item.title,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Text(
+                    item.title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
 
-  Widget buildCardMenu({required CardItem item}) => GestureDetector(
+  Widget buildCardMenu({required Produk produk}) => GestureDetector(
         onTap: () {
-          _showItemDetails(item);
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 500),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOut;
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  DetailPage(
+                produk: produk,
+              ),
+            ),
+          );
         },
-        child: SizedBox(
+        child: Card(
+          elevation: 5.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 150,
-                width: 180,
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: const Color(0xFFAD343E), width: 2),
-                ),
+              Flexible(
+                flex: 2,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image.asset(
-                    item.image,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(14.0),
+                  ),
+                  child: Image.network(
+                    '${ApiClient().domainName}/images/${produk.image}',
                     fit: BoxFit.cover,
+                    width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      color: Colors.grey,
+                      child: Center(
+                        child: Icon(Icons.error),
+                      ),
+                    ),
+                  ), // Use the image URL from the Produk object
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          produk.namaProduk,
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'Rp ${produk.hargaProduk.toString()}.00',
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Text(
-                item.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
             ],
           ),
         ),
@@ -203,14 +295,17 @@ class _ExplorePageState extends State<ExplorePage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                width: 350,
-                height: 350,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image.asset(
-                    item.image,
-                    fit: BoxFit.cover,
+              Card(
+                elevation: 20.0,
+                child: Container(
+                  width: 350,
+                  height: 350,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      item.image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

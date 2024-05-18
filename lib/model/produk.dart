@@ -2,18 +2,19 @@
 
 class Produk {
   final int idProduk;
+  final String? image;
   final String namaProduk;
-  final int? hargaProduk;
   final String jenisProduk;
-  final String? satuanProduk;
-  final int? idPenitip;
-  final int? idResep;
   final int? stockProduk;
   final DateTime? tanggalMulaiPo;
   final DateTime? tanggalSelesaiPo;
   final int? kuota;
+  final int? idPenitip;
+  final int? idResep;
+  final int? hargaProduk;
+  final String? satuanProduk;
   final String? status;
-  final String? image;
+  final String? tipeProduk;
 
   Produk({
     required this.idProduk,
@@ -29,6 +30,7 @@ class Produk {
     this.kuota,
     this.status,
     this.image,
+    this.tipeProduk,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
@@ -50,24 +52,28 @@ class Produk {
       kuota: json['kuota'],
       status: json['status'],
       image: json['image'],
+      tipeProduk: json['tipe_produk'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id_produk'] = this.idProduk;
-    data['nama_produk'] = this.namaProduk;
-    data['harga_produk'] = this.hargaProduk;
-    data['jenis_produk'] = this.jenisProduk;
-    data['satuan_produk'] = this.satuanProduk;
-    data['id_penitip'] = this.idPenitip;
-    data['id_resep'] = this.idResep;
-    data['stock_produk'] = this.stockProduk;
-    data['tanggal_mulai_po'] = this.tanggalMulaiPo?.toString();
-    data['tanggal_selesai_po'] = this.tanggalSelesaiPo?.toString();
-    data['kuota'] = this.kuota;
-    data['status'] = this.status;
-    data['image'] = this.image;
-    return data;
+    return {
+      'id_produk': idProduk,
+      'image': image ?? "", // Return empty string if image is null
+      'nama_produk': namaProduk,
+      'jenis_produk': jenisProduk,
+      'stock_produk': stockProduk,
+      'tanggal_mulai_po': tanggalMulaiPo
+          ?.toIso8601String(), // Convert DateTime to ISO 8601 string format
+      'tanggal_selesai_po': tanggalSelesaiPo
+          ?.toIso8601String(), // Convert DateTime to ISO 8601 string format
+      'kuota': kuota,
+      'id_penitip': idPenitip,
+      'id_resep': idResep,
+      'harga_produk': hargaProduk,
+      'satuan_produk': satuanProduk,
+      'status': status,
+      'tipe_produk': tipeProduk,
+    };
   }
 }

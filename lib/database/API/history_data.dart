@@ -9,9 +9,9 @@ class HistoryClient {
 
   HistoryClient(this.apiClient);
 
-  Future<List<History>> getHistoryList() async {
+  Future<List<History>> getHistoryList(int id_customer) async {
     var client = http.Client();
-    Uri uri = Uri.parse('http://10.0.2.2:8000/api/history');
+    Uri uri = Uri.parse('http://10.0.2.2:8000/api/history/${id_customer}');
 
     try {
       var response = await client.get(uri).timeout(const Duration(seconds: 10));
@@ -33,7 +33,7 @@ class HistoryClient {
           throw ('Failed to load History list');
         }
       } else {
-        throw ('Failed to load History list');
+        return [];
       }
     } on TimeoutException catch (_) {
       throw ('Take too long, please check your connection');
@@ -44,7 +44,7 @@ class HistoryClient {
 
   Future<List<History>> searchHistory(String query) async {
     var client = http.Client();
-    Uri uri = Uri.parse('${apiClient.baseUrl}/history/${query}');
+    Uri uri = Uri.parse('${apiClient.baseUrl}/history_/${query}');
 
     try {
       var response = await client.get(uri).timeout(const Duration(seconds: 10));

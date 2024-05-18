@@ -5,7 +5,8 @@ import 'package:atmakitchen_4_j_mobile/bloc/login_bloc.dart';
 import 'package:atmakitchen_4_j_mobile/bloc/login_event.dart';
 import 'package:atmakitchen_4_j_mobile/bloc/login_state.dart';
 import 'package:atmakitchen_4_j_mobile/model/user.dart';
-import 'package:atmakitchen_4_j_mobile/view/index.dart';
+import 'package:atmakitchen_4_j_mobile/view/index_Mo.dart';
+import 'package:atmakitchen_4_j_mobile/view/index_customer.dart';
 import 'package:atmakitchen_4_j_mobile/view/forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,8 +39,17 @@ class _LoginviewState extends State<LoginPage> {
             User userData =
                 (state.formSubmissionState as SubmissionSuccess).user;
             await saveLoginData(userData);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const IndexPage(number: 0)));
+            if (userData.role == "Customer") {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (_) => const CustomerPage()));
+            } else {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const IndexPage(
+                            number: 0,
+                          )));
+            }
           }
           if (state.formSubmissionState is SubmissionFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -226,5 +236,7 @@ class _LoginviewState extends State<LoginPage> {
     await sharedPrefs.setString('noTelp', userData.noTelpon!);
     await sharedPrefs.setString('name', userData.nama!);
     await sharedPrefs.setString('token', userData.token!);
+    await sharedPrefs.setString('role', userData.role!);
+    await sharedPrefs.setString('image', userData.image!);
   }
 }

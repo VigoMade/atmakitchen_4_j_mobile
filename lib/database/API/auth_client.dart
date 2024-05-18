@@ -24,18 +24,48 @@ class AuthClient {
         var json = response.body;
         var jsonData = jsonDecode(json);
 
-        var userJson = jsonData['customer'];
-        String token = jsonData['access_token'];
-        User user = User.fromJson(userJson);
-        user.token = token;
-        return user;
+        // Memastikan kunci yang diakses ada dalam objek JSON
+        if (jsonData.containsKey('user') &&
+            jsonData.containsKey('role') &&
+            jsonData.containsKey('token')) {
+          // Mengambil data pengguna dari respons
+          var userJson = jsonData['user'];
+          String role = jsonData['role'];
+          int customer = jsonData['id_customer'];
+          String token = jsonData['token'];
+          String email = jsonData['email'];
+          String noTelpon = jsonData['noTelpon'];
+          String nama = jsonData['nama'];
+          String image = jsonData['image'];
+
+          // Menangani kasus jika nilai 'userJson' adalah null
+          if (userJson != null) {
+            // Membuat objek User dari JSON
+            User user = User.fromJson(userJson);
+
+            // Menetapkan peran (role) dan token pada objek User
+            user.idCustomer = customer;
+            user.role = role;
+            user.token = token;
+            user.email = email;
+            user.noTelpon = noTelpon;
+            user.nama = nama;
+            user.image = image;
+
+            return user;
+          } else {
+            throw ('Data pengguna tidak valid');
+          }
+        } else {
+          throw ('Struktur respons tidak valid');
+        }
       } else {
         var json = response.body;
         var jsonData = jsonDecode(json);
-        throw (jsonData['error'] ?? 'Login Failed');
+        throw (jsonData['error'] ?? 'Login Gagal');
       }
     } on TimeoutException catch (_) {
-      throw ('Take too long, please check your connection');
+      throw ('Waktu terlalu lama, harap periksa koneksi Anda');
     } finally {
       client.close();
     }
@@ -60,10 +90,10 @@ class AuthClient {
       } else {
         var json = response.body;
         var jsonData = jsonDecode(json);
-        throw (jsonData['error'] ?? 'Email Invalid ');
+        throw (jsonData['error'] ?? 'Email Invalid');
       }
     } on TimeoutException catch (_) {
-      throw ('Take too long, please check your connection');
+      throw ('Waktu terlalu lama, harap periksa koneksi Anda');
     } finally {
       client.close();
     }

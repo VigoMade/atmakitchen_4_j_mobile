@@ -27,7 +27,7 @@ class _BookingPageState extends State<BookingPage> {
             ),
           )
         ],
-        backgroundColor: const Color(0xFFAD343E),
+        backgroundColor: Color.fromARGB(255, 201, 52, 64),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
