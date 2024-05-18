@@ -141,8 +141,10 @@ class _ItemPageState extends State<ItemPage> {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(14.0),
                   ),
-                  child: Image.network(
-                    '${ApiClient().domainName}/images/${produk.image}',
+
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '${ApiClient().domainName}/storage/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,

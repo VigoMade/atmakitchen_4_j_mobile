@@ -45,6 +45,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     List<CardItem> items = [
       const CardItem(image: "images/cake.png", title: "Cake", subTitle: ""),
+
       const CardItem(image: "images/bread.png", title: "Bread", subTitle: ""),
       const CardItem(image: "images/minuman.png", title: "Drink", subTitle: ""),
       const CardItem(

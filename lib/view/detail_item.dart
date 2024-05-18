@@ -34,7 +34,7 @@ class _DetailPageState extends State<DetailPage> {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.7,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Card(
@@ -48,17 +48,26 @@ class _DetailPageState extends State<DetailPage> {
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(14.0),
                     ),
-                    child: Image.network(
-                      '${ApiClient().domainName}/images/${widget.produk.image}',
+
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          '${ApiClient().domainName}/storage/${widget.produk.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      height: double.infinity,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey,
-                        child: Center(
-                          child: Icon(Icons.error),
-                        ),
-                      ),
+                      errorWidget: (context, url, error) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(
+                                () {}); // Memicu pembaruan UI untuk mencoba memuat gambar lagi
+                          },
+                          child: Container(
+                            color: Colors.grey,
+                            child: const Center(
+                              child: Icon(Icons.error),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -94,17 +103,19 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10.0, left: 8.0),
+                          padding: const EdgeInsets.only(top: 10.0, left: 8.0),
                           child: Text(
-                            "Stock : ${widget.produk.stockProduk.toString()}",
+                            widget.produk.stockProduk == 0
+                                ? "Kuota : ${widget.produk.kuota.toString()}"
+                                : "Stock : ${widget.produk.stockProduk.toString()}",
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 15.0),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0, top: 15.0),
                           child: Text(
                             "Kue lapis legit merupakan makanan khas Lampung yang terkenal. Kue yang bertekstur lembut dan bercita rasa manis ini biasa dijadikan cemilan santai ketika dirumah. Kue lapis legit juga sering disajikan pada acara hajatan.",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                             ),
                           ),

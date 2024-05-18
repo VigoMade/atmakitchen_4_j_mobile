@@ -18,7 +18,7 @@ class AuthClient {
           'username': username,
           'password': password,
         },
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 20));
 
       if (response.statusCode == 200) {
         var json = response.body;
