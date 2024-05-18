@@ -139,13 +139,12 @@ class _ItemPageState extends State<ItemPage> {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(14.0),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        '${ApiClient().domainName}/storage/${produk.image}',
+                  child: Image.network(
+                    '${ApiClient().domainName}/images/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
-                    errorWidget: (context, url, error) => Container(
+                    errorBuilder: (context, error, stackTrace) => Container(
                       color: Colors.grey,
                       child: Center(
                         child: Icon(Icons.error),

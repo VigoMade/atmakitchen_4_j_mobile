@@ -49,26 +49,18 @@ class _DetailPageState extends State<DetailPage> {
                       top: Radius.circular(14.0),
                     ),
 
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          '${ApiClient().domainName}/storage/${widget.produk.image}',
+                    child: Image.network(
+                      '${ApiClient().domainName}/images/${widget.produk.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      errorWidget: (context, url, error) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(
-                                () {}); // Memicu pembaruan UI untuk mencoba memuat gambar lagi
-                          },
-                          child: Container(
-                            color: Colors.grey,
-                            child: const Center(
-                              child: Icon(Icons.error),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                      height: double.infinity,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey,
+                        child: Center(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
+                    ), // Use the image URL fr
                   ),
                 ),
                 Flexible(
