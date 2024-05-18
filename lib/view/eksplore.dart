@@ -1,3 +1,5 @@
+import 'package:atmakitchen_4_j_mobile/model/hampers.dart';
+import 'package:atmakitchen_4_j_mobile/view/hampersView.dart';
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/view/produkView.dart';
 import 'package:atmakitchen_4_j_mobile/model/produk.dart';
@@ -43,11 +45,12 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     List<CardItem> items = [
       const CardItem(image: "images/cake.png", title: "Cake", subTitle: ""),
-      const CardItem(image: "images/bread.png", title: "bread", subTitle: ""),
-      const CardItem(image: "images/minuman.png", title: "drink", subTitle: ""),
+
+      const CardItem(image: "images/bread.png", title: "Bread", subTitle: ""),
+      const CardItem(image: "images/minuman.png", title: "Drink", subTitle: ""),
       const CardItem(
           image: "images/hampers.png", title: "Hampers", subTitle: ""),
-      const CardItem(image: "images/lainnya.png", title: "other", subTitle: ""),
+      const CardItem(image: "images/lainnya.png", title: "Other", subTitle: ""),
     ];
 
     return Scaffold(
@@ -102,7 +105,7 @@ class _ExplorePageState extends State<ExplorePage> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: FutureBuilder<List<Produk>>(
                 future: _produkFuture,
                 builder: (context, snapshot) {
@@ -139,28 +142,51 @@ class _ExplorePageState extends State<ExplorePage> {
 
   Widget buildCard({required CardItem item}) => GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 500),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.easeInOut;
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
+          item.title == "Hampers"
+              ? Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 500),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(1.0, 0.0);
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOut;
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+                      var offsetAnimation = animation.drive(tween);
+                      return SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      );
+                    },
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        HampersPage(),
+                  ),
+                )
+              : Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 500),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(1.0, 0.0);
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOut;
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+                      var offsetAnimation = animation.drive(tween);
+                      return SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      );
+                    },
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        ItemPage(
+                      title: item.title,
+                    ),
+                  ),
                 );
-              },
-              pageBuilder: (context, animation, secondaryAnimation) => ItemPage(
-                title: item.title,
-              ),
-            ),
-          );
         },
         child: Card(
           margin: EdgeInsets.only(top: 20, right: 5, left: 5),
@@ -227,105 +253,68 @@ class _ExplorePageState extends State<ExplorePage> {
         },
         child: Card(
           elevation: 5.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 2,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(14.0),
-                  ),
-                  child: Image.network(
-                    '${ApiClient().domainName}/storage/${produk.image}',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: Colors.grey,
-                      child: Center(
-                        child: Icon(Icons.error),
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: 250, // Menetapkan tinggi minimum pada Container
+              maxHeight: 300, // Menetapkan tinggi maksimum pada Container
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(14.0),
+                    ),
+                    child: Image.network(
+                      '${ApiClient().domainName}/images/${produk.image}',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 150, // Menetapkan tinggi pada Image
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey,
+                        child: Center(
+                          child: Icon(Icons.error),
+                        ),
                       ),
                     ),
-                  ), // Use the image URL from the Produk object
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          produk.namaProduk,
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          'Rp ${produk.hargaProduk.toString()}.00',
-                          style: const TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-              ),
-            ],
+                Flexible(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            produk.namaProduk,
+                            style: const TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Rp ${produk.hargaProduk.toString()}.00',
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
-
-  void _showItemDetails(CardItem item) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Card(
-                elevation: 20.0,
-                child: Container(
-                  width: 350,
-                  height: 350,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.asset(
-                      item.image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                item.title,
-                style:
-                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              Text(item.subTitle),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

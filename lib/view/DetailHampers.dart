@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:atmakitchen_4_j_mobile/database/API/api_client.dart';
-import 'package:atmakitchen_4_j_mobile/model/produk.dart';
+import 'package:atmakitchen_4_j_mobile/model/hampers.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key, required this.produk}) : super(key: key);
-  final Produk produk;
+class DetailHampers extends StatefulWidget {
+  const DetailHampers({Key? key, required this.hampers}) : super(key: key);
+  final Hampers hampers;
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailHampers> createState() => _DetailHampersState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailHampersState extends State<DetailHampers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +33,7 @@ class _DetailPageState extends State<DetailPage> {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-        child: SizedBox(
+        child: Container(
           height: MediaQuery.of(context).size.height * 0.7,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Card(
@@ -48,26 +47,17 @@ class _DetailPageState extends State<DetailPage> {
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(14.0),
                     ),
-
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          '${ApiClient().domainName}/storage/${widget.produk.image}',
+                    child: Image.network(
+                      '${ApiClient().domainName}/images/${widget.hampers.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      errorWidget: (context, url, error) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(
-                                () {}); // Memicu pembaruan UI untuk mencoba memuat gambar lagi
-                          },
-                          child: Container(
-                            color: Colors.grey,
-                            child: const Center(
-                              child: Icon(Icons.error),
-                            ),
-                          ),
-                        );
-                      },
+                      height: double.infinity,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey,
+                        child: Center(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -85,7 +75,7 @@ class _DetailPageState extends State<DetailPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                widget.produk.namaProduk,
+                                widget.hampers.namaHampers!,
                                 style: const TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
@@ -94,7 +84,7 @@ class _DetailPageState extends State<DetailPage> {
                               padding:
                                   const EdgeInsets.only(left: 8.0, right: 8.0),
                               child: Text(
-                                'Rp ${widget.produk.hargaProduk.toString()}.00',
+                                'Rp ${widget.hampers.hargaHampers.toString()}.00',
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),
@@ -103,19 +93,10 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0, top: 15.0),
                           child: Text(
-                            widget.produk.stockProduk == 0
-                                ? "Kuota : ${widget.produk.kuota.toString()}"
-                                : "Stock : ${widget.produk.stockProduk.toString()}",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 8.0, top: 15.0),
-                          child: Text(
-                            "Kue lapis legit merupakan makanan khas Lampung yang terkenal. Kue yang bertekstur lembut dan bercita rasa manis ini biasa dijadikan cemilan santai ketika dirumah. Kue lapis legit juga sering disajikan pada acara hajatan.",
-                            style: TextStyle(
+                            widget.hampers.deskripsiHampers!,
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
                           ),
