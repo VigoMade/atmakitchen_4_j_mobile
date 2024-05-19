@@ -140,7 +140,7 @@ class _ItemPageState extends State<ItemPage> {
                     top: Radius.circular(14.0),
                   ),
                   child: Image.network(
-                    '${ApiClient().domainName}/images/${produk.image}',
+                    '${ApiClient().domainName}/storage/${produk.image}',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,

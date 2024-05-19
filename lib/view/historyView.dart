@@ -110,7 +110,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(4.0),
                     child: Image.network(
-                      "http://10.0.2.2:8000/images/${history.fotoProduk}",
+                      "http://10.0.2.2:8000/storage/${history.fotoProduk}",
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
