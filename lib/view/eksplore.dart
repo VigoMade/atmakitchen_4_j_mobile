@@ -45,7 +45,6 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     List<CardItem> items = [
       const CardItem(image: "images/cake.png", title: "Cake", subTitle: ""),
-
       const CardItem(image: "images/bread.png", title: "Bread", subTitle: ""),
       const CardItem(image: "images/minuman.png", title: "Drink", subTitle: ""),
       const CardItem(
@@ -268,7 +267,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       top: Radius.circular(14.0),
                     ),
                     child: Image.network(
-                      '${ApiClient().domainName}/images/${produk.image}',
+                      '${ApiClient().domainName}/storage/${produk.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: 150, // Menetapkan tinggi pada Image

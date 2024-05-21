@@ -50,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
                     ),
 
                     child: Image.network(
-                      '${ApiClient().domainName}/images/${widget.produk.image}',
+                      '${ApiClient().domainName}/storage/${widget.produk.image}',
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
