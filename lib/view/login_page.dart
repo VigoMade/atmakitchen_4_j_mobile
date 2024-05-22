@@ -39,16 +39,16 @@ class _LoginviewState extends State<LoginPage> {
             User userData =
                 (state.formSubmissionState as SubmissionSuccess).user;
             await saveLoginData(userData);
-            if (userData.role == "Customer") {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => const CustomerPage()));
-            } else {
+            if (userData.role == "MO") {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (_) => const IndexPage(
                             number: 0,
                           )));
+            } else {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (_) => const CustomerPage()));
             }
           }
           if (state.formSubmissionState is SubmissionFailed) {

@@ -30,7 +30,7 @@ class HistoryClient {
               .toList();
           return historyList;
         } else {
-          throw ('Failed to load History list');
+          throw ('Failed to load History list ${response.statusCode}');
         }
       } else {
         return [];

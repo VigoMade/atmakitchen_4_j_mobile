@@ -1,5 +1,5 @@
 class History {
-  int? idTransaksi;
+  String? idTransaksi;
   int? idCustomer;
   String? fotoProduk;
   String? namaProduk;
@@ -15,7 +15,7 @@ class History {
 
   factory History.fromJson(Map<String, dynamic> json) {
     return History(
-      idTransaksi: json['id_transaksi'],
+      idTransaksi: json['id_transaksi'].toString(),
       idCustomer: json['id_customer'],
       fotoProduk: json['image'],
       namaProduk: json['nama_produk'],
