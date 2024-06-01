@@ -1,5 +1,7 @@
 class User {
   int? idCustomer;
+  int? pointCustomer;
+  int? saldoCustomer;
   String? nama;
   String? username;
   String? password;
@@ -11,6 +13,8 @@ class User {
   String? image;
   User(
       {this.idCustomer,
+      this.pointCustomer,
+      this.saldoCustomer,
       this.nama,
       this.username,
       this.password,
@@ -24,6 +28,8 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       idCustomer: json['id_customer'],
+      pointCustomer: json['poin_customer'],
+      saldoCustomer: json['saldo_customer'],
       nama: json['nama'],
       email: json['email'],
       noTelpon: json['noTelpon'],
