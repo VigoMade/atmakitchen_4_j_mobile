@@ -1,3 +1,4 @@
+import 'package:atmakitchen_4_j_mobile/view/indexOwner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atmakitchen_4_j_mobile/bloc/form_submission_state.dart';
@@ -52,6 +53,14 @@ class _LoginviewState extends State<LoginPage> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => const IndexPage(
+                            number: 0,
+                          )));
+            }
+            if (userData.role == "Owner") {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const IndexOwnerPage(
                             number: 0,
                           )));
             } else {
