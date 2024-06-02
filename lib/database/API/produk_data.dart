@@ -76,4 +76,38 @@ class ProdukClient {
       client.close();
     }
   }
+
+  Future<List<Produk>> getProdukByCategory(String category) async {
+    var client = http.Client();
+    Uri uri = Uri.parse('${apiClient.baseUrl}/produks/${category}');
+
+    try {
+      var response = await client.get(uri).timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        List<Produk> produkList = [];
+
+        if (jsonData is List) {
+          // Jika respons adalah List, maka langsung parse ke Produk
+          produkList = jsonData.map((data) => Produk.fromJson(data)).toList();
+        } else if (jsonData is Map && jsonData.containsKey('data')) {
+          // Jika respons adalah Map dan memiliki kunci 'data', maka ambil data dari 'data'
+          produkList = (jsonData['data'] as List)
+              .map((data) => Produk.fromJson(data))
+              .toList();
+        } else {
+          throw ('Failed to load Produk list');
+        }
+
+        return produkList;
+      } else {
+        throw ('Failed to load Produk list error');
+      }
+    } on TimeoutException catch (_) {
+      throw ('Take too long, please check your connection');
+    } finally {
+      client.close();
+    }
+  }
 }

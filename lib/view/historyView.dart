@@ -122,9 +122,9 @@ class _HistoryPageState extends State<HistoryPage> {
             subtitle: Text(
               history.statusPesanan ?? '',
               style: TextStyle(
-                color: history.statusPesanan == "pending"
-                    ? Colors.grey
-                    : Colors.blue,
+                color: history.statusPesanan == "Selesai"
+                    ? Color.fromARGB(255, 76, 154, 56)
+                    : Color.fromARGB(255, 243, 33, 33),
               ),
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:atmakitchen_4_j_mobile/view/indexOwner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atmakitchen_4_j_mobile/bloc/form_submission_state.dart';
@@ -9,6 +10,7 @@ import 'package:atmakitchen_4_j_mobile/view/index_Mo.dart';
 import 'package:atmakitchen_4_j_mobile/view/index_customer.dart';
 import 'package:atmakitchen_4_j_mobile/view/forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:atmakitchen_4_j_mobile/notification.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +23,13 @@ class _LoginviewState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final NotificationSetUp _noti = NotificationSetUp();
+
+  void initState() {
+    _noti.configurePushNotifications(context);
+    _noti.eventListenerCallback(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +53,14 @@ class _LoginviewState extends State<LoginPage> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => const IndexPage(
+                            number: 0,
+                          )));
+            }
+            if (userData.role == "Owner") {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const IndexOwnerPage(
                             number: 0,
                           )));
             } else {
@@ -238,5 +255,7 @@ class _LoginviewState extends State<LoginPage> {
     await sharedPrefs.setString('token', userData.token!);
     await sharedPrefs.setString('role', userData.role!);
     await sharedPrefs.setString('image', userData.image!);
+    await sharedPrefs.setInt('poin_customer', userData.pointCustomer!);
+    await sharedPrefs.setInt('saldo_customer', userData.saldoCustomer!);
   }
 }

@@ -4,21 +4,20 @@ import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
 import 'package:atmakitchen_4_j_mobile/view/laporan.dart';
 import 'package:atmakitchen_4_j_mobile/profile.dart';
 
-class IndexPage extends StatefulWidget {
-  const IndexPage({Key? key, required this.number}) : super(key: key);
+class IndexOwnerPage extends StatefulWidget {
+  const IndexOwnerPage({Key? key, required this.number}) : super(key: key);
   final int number;
 
   @override
-  State<IndexPage> createState() => _IndexPageState();
+  State<IndexOwnerPage> createState() => _IndexOwnerPageState();
 }
 
-class _IndexPageState extends State<IndexPage> {
+class _IndexOwnerPageState extends State<IndexOwnerPage> {
   int _selectedIndex = 0; // Inisialisasi indeks default
 
   static const List<Widget> _widgetOptions = <Widget>[
     ExplorePage(),
     LaporanPage(),
-    presensiView(), // Mengubah presensiView() menjadi PresensiView()
     ProfilePage(),
   ];
 
@@ -57,13 +56,6 @@ class _IndexPageState extends State<IndexPage> {
               size: 24,
             ),
             label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book,
-              size: 24,
-            ),
-            label: 'Presensi',
           ),
           BottomNavigationBarItem(
             icon: Icon(

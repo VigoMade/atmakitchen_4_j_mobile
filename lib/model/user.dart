@@ -1,5 +1,7 @@
 class User {
   int? idCustomer;
+  int? pointCustomer;
+  int? saldoCustomer;
   String? nama;
   String? username;
   String? password;
@@ -9,8 +11,11 @@ class User {
   String? token;
   String? role;
   String? image;
+  String? device_key;
   User(
       {this.idCustomer,
+      this.pointCustomer,
+      this.saldoCustomer,
       this.nama,
       this.username,
       this.password,
@@ -19,11 +24,14 @@ class User {
       this.emailVerifiedAt,
       this.token,
       this.role,
-      this.image});
+      this.image,
+      this.device_key});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       idCustomer: json['id_customer'],
+      pointCustomer: json['poin_customer'] ?? 0,
+      saldoCustomer: json['saldo_customer'] ?? 0,
       nama: json['nama'],
       email: json['email'],
       noTelpon: json['noTelpon'],
@@ -46,6 +54,7 @@ class User {
       'token': token,
       'role': role,
       'image': image,
+      'device_key': device_key,
     };
   }
 }
