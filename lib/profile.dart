@@ -351,8 +351,7 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(width: 5),
           Text(
             value.toString(),
-            style: TextStyle(fontSize: 16)
-            ,
+            style: TextStyle(fontSize: 16),
           ),
         ],
       ),

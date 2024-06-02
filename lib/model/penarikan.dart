@@ -3,7 +3,7 @@ import 'dart:convert';
 class Penarikan {
   final int idPenarikan;
   final int idRekening;
-  final double totalPenarikan;
+  final int totalPenarikan;
   final String status;
   final String tanggal;
   final String namaCustomer;
@@ -25,7 +25,7 @@ class Penarikan {
     return Penarikan(
       idPenarikan: json['id_penarikan'] as int,
       idRekening: json['id_rekening'] as int,
-      totalPenarikan: json['total_penarikan'] as double,
+      totalPenarikan: json['total_penarikan'] as int,
       status: json['status_penarikan'] as String,
       tanggal: json['tanggal_penarikan'] as String,
       namaCustomer: json['nama_customer'] as String,

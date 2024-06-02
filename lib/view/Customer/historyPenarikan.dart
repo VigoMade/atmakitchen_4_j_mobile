@@ -52,9 +52,7 @@ class _HistoryPenarikanPageState extends State<HistoryPenarikanPage> {
   void _filterPenarikan(String query) {
     setState(() {
       _filteredPenarikanList = _penarikanList.where((penarikan) {
-        return penarikan.namaCustomer
-            .toLowerCase()
-            .contains(query.toLowerCase());
+        return penarikan.namaBank.toLowerCase().contains(query.toLowerCase());
       }).toList();
     });
   }

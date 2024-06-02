@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
-import 'package:atmakitchen_4_j_mobile/view/booking.dart';
 import 'package:atmakitchen_4_j_mobile/profile.dart';
 
 class CustomerPage extends StatefulWidget {
@@ -15,7 +14,6 @@ class _CustomerPageState extends State<CustomerPage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     ExplorePage(),
-    BookingPage(), // Mengubah presensiView() menjadi PresensiView()
     ProfilePage(),
   ];
 
@@ -73,13 +71,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     size: 24,
                   ),
                   label: 'Explore',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.bed,
-                    size: 24,
-                  ),
-                  label: 'Booking',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(

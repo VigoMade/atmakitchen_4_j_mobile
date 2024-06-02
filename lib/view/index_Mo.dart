@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:atmakitchen_4_j_mobile/view/MO/presensiView.dart';
 import 'package:atmakitchen_4_j_mobile/view/eksplore.dart';
-import 'package:atmakitchen_4_j_mobile/view/booking.dart';
+import 'package:atmakitchen_4_j_mobile/view/laporan.dart';
 import 'package:atmakitchen_4_j_mobile/profile.dart';
 
 class IndexPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _IndexPageState extends State<IndexPage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     ExplorePage(),
-    BookingPage(),
+    LaporanPage(),
     presensiView(), // Mengubah presensiView() menjadi PresensiView()
     ProfilePage(),
   ];
@@ -53,10 +53,10 @@ class _IndexPageState extends State<IndexPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.bed,
+              Icons.description,
               size: 24,
             ),
-            label: 'Booking',
+            label: 'Laporan',
           ),
           BottomNavigationBarItem(
             icon: Icon(

@@ -61,6 +61,7 @@ class _PenarikanPageState extends State<PenarikanPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Penarikan Saldo'),
+        backgroundColor: const Color(0xFFAD343E),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -140,6 +141,8 @@ class _PenarikanPageState extends State<PenarikanPage> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content:
                             Text('Permintaan penarikan saldo berhasil dibuat'),
+                        backgroundColor:
+                            const Color.fromARGB(255, 27, 130, 215),
                         duration: Duration(seconds: 2),
                       ));
                       Navigator.pushReplacement(

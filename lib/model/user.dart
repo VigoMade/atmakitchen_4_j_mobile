@@ -28,8 +28,8 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       idCustomer: json['id_customer'],
-      pointCustomer: json['poin_customer'],
-      saldoCustomer: json['saldo_customer'],
+      pointCustomer: json['poin_customer'] ?? 0,
+      saldoCustomer: json['saldo_customer'] ?? 0,
       nama: json['nama'],
       email: json['email'],
       noTelpon: json['noTelpon'],
