@@ -11,6 +11,7 @@ class User {
   String? token;
   String? role;
   String? image;
+  String? device_key;
   User(
       {this.idCustomer,
       this.pointCustomer,
@@ -23,7 +24,8 @@ class User {
       this.emailVerifiedAt,
       this.token,
       this.role,
-      this.image});
+      this.image,
+      this.device_key});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -52,6 +54,7 @@ class User {
       'token': token,
       'role': role,
       'image': image,
+      'device_key': device_key,
     };
   }
 }

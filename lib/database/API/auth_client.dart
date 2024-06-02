@@ -1,4 +1,8 @@
+import 'package:atmakitchen_4_j_mobile/firebase_options.dart';
 import 'package:atmakitchen_4_j_mobile/model/user.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -8,6 +12,12 @@ class AuthClient {
   ApiClient apiClient = ApiClient();
 
   Future<User> loginUser(String username, String password) async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    final String? token = await FirebaseMessaging.instance.getToken();
     var client = http.Client();
     Uri uri = Uri.parse('${apiClient.baseUrl}/login');
 
@@ -17,6 +27,7 @@ class AuthClient {
         body: {
           'username': username,
           'password': password,
+          'device_key': token, // Include the device key in the request body
         },
       ).timeout(const Duration(seconds: 20));
 
@@ -24,11 +35,9 @@ class AuthClient {
         var json = response.body;
         var jsonData = jsonDecode(json);
 
-        // Memastikan kunci yang diakses ada dalam objek JSON
         if (jsonData.containsKey('user') &&
             jsonData.containsKey('role') &&
             jsonData.containsKey('token')) {
-          // Mengambil data pengguna dari respons
           var userJson = jsonData['user'];
           String role = jsonData['role'];
           int customer = jsonData['id_customer'];
@@ -38,12 +47,9 @@ class AuthClient {
           String nama = jsonData['nama'];
           String image = jsonData['image'];
 
-          // Menangani kasus jika nilai 'userJson' adalah null
           if (userJson != null) {
-            // Membuat objek User dari JSON
             User user = User.fromJson(userJson);
 
-            // Menetapkan peran (role) dan token pada objek User
             user.idCustomer = customer;
             user.role = role;
             user.token = token;
