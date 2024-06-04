@@ -31,6 +31,26 @@ class _LoginviewState extends State<LoginPage> {
     super.initState();
   }
 
+  void navigateBasedOnUserRole(BuildContext context, String role) {
+    Widget page;
+
+    switch (role) {
+      case "MO":
+        page = const IndexPage(number: 0);
+        break;
+      case "Owner":
+        page = const IndexOwnerPage(number: 0);
+        break;
+      default:
+        page = const CustomerPage();
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => page),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,25 +68,7 @@ class _LoginviewState extends State<LoginPage> {
             User userData =
                 (state.formSubmissionState as SubmissionSuccess).user;
             await saveLoginData(userData);
-            if (userData.role == "MO") {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const IndexPage(
-                            number: 0,
-                          )));
-            }
-            if (userData.role == "Owner") {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const IndexOwnerPage(
-                            number: 0,
-                          )));
-            } else {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => const CustomerPage()));
-            }
+            navigateBasedOnUserRole(context, userData.role!);
           }
           if (state.formSubmissionState is SubmissionFailed) {
             ScaffoldMessenger.of(context).showSnackBar(

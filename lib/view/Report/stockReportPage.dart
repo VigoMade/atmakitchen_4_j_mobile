@@ -84,6 +84,7 @@ class _StockReportPageState extends State<StockReportPage> {
                           ),
                           DataTable(
                             dataRowHeight: 30,
+                            columnSpacing: 71,
                             border: TableBorder(
                                 left: BorderSide.none,
                                 right: BorderSide.none,
