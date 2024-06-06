@@ -21,14 +21,14 @@ class CardItem {
   });
 }
 
-class ExplorePage extends StatefulWidget {
-  const ExplorePage({super.key});
+class ExploreNoPage extends StatefulWidget {
+  const ExploreNoPage({super.key});
 
   @override
-  _ExplorePageState createState() => _ExplorePageState();
+  _ExploreNoPageState createState() => _ExploreNoPageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> {
+class _ExploreNoPageState extends State<ExploreNoPage> {
   late Future<List<Produk>> _produkFuture;
 
   @override
@@ -61,12 +61,18 @@ class _ExplorePageState extends State<ExplorePage> {
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
         actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              size: 40,
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+              icon: const Icon(
+                Icons.login,
+                size: 40,
+                color: Color.fromARGB(255, 84, 145, 235),
+              ),
             ),
           )
         ],
